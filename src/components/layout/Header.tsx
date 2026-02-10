@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { siteConfig } from "@/config/navigation";
 
 export default function Header() {
+  const [open, setOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-50 border-b border-arihant-green/15 bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
@@ -27,6 +31,28 @@ export default function Header() {
           Open Account
         </Link>
       </div>
+
+      {open && (
+        <div className="border-t border-gray-200 bg-white px-6 py-4 md:hidden">
+          <div className="space-y-3 text-sm text-gray-700">
+            <Link href="/products/equity" className="block" onClick={() => setOpen(false)}>
+              Products
+            </Link>
+            <Link href="/research/blog" className="block" onClick={() => setOpen(false)}>
+              Research
+            </Link>
+            <Link href="/tools/sip" className="block" onClick={() => setOpen(false)}>
+              Tools
+            </Link>
+            <Link href="/about-us" className="block" onClick={() => setOpen(false)}>
+              About
+            </Link>
+            <Link href="/contact" className="block pt-2 font-semibold text-arihant-green" onClick={() => setOpen(false)}>
+              Open Account
+            </Link>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
