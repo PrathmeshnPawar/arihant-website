@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 
 const products = [
   {

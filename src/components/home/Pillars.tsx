@@ -1,3 +1,5 @@
+import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
+
 const pillars = [
   { title: "Invest", items: ["Equity", "Mutual Funds", "IPOs"] },
   { title: "Trade", items: ["Advanced Platforms", "Expert Research", "Market Tools"] },

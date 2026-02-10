@@ -1,4 +1,9 @@
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/Button";
+
+const highlights = ["30+ years of market expertise", "2.5L+ active investors", "Research-backed recommendations"];
 
 const highlights = [
   "30+ years of market expertise",
@@ -60,6 +65,26 @@ export default function Hero() {
             </div>
           </div>
         </div>
+
+        <Card>
+          <CardContent className="p-5">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Card className="border-0 bg-arihant-violet-soft p-4 shadow-none">
+                <p className="text-xs font-medium text-gray-500">Portfolio Value</p>
+                <p className="mt-2 text-2xl font-bold text-gray-900">₹ 18.42L</p>
+                <p className="text-sm text-arihant-green">+12.8% (1Y)</p>
+              </Card>
+              <Card className="border-0 bg-arihant-green-soft p-4 shadow-none">
+                <p className="text-xs font-medium text-gray-500">Watchlist</p>
+                <p className="mt-2 text-sm font-semibold text-gray-900">Nifty 50, Banking, Pharma</p>
+              </Card>
+              <Card className="p-4 sm:col-span-2">
+                <p className="text-xs font-medium text-gray-500">Today&apos;s Insight</p>
+                <p className="mt-1 text-sm text-gray-700">Stay invested with staggered allocation during volatile market sessions.</p>
+              </Card>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </section>
   );

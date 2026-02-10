@@ -1,3 +1,7 @@
+import Button from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/card";
+import Input from "@/components/ui/input";
+
 export default function SIPCalculator() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-20">

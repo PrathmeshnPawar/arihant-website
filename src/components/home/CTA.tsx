@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/Button";
 
 export default function CTA() {
   return (
