@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import { fadeUp, stagger } from "@/lib/animations";
+
 const stats = [
   { label: "Years of Experience", value: "30+" },
   { label: "Active Investors", value: "2.5+ Lakh" },
@@ -5,21 +8,30 @@ const stats = [
   { label: "Pan India Presence", value: "120+ Cities" },
 ];
 
+
+
 export function StatsGrid() {
   return (
-    <section className="bg-arihant-violet-soft py-16">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <motion.section
+      className="bg-arihant-violet-soft py-20"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={stagger}
+    >
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-10 px-6 text-center md:grid-cols-4">
         {stats.map((stat) => (
-          <div key={stat.label}>
-            <p className="text-3xl font-bold text-arihant-green">
+          <motion.div key={stat.label} variants={fadeUp}>
+            <p className="text-4xl font-bold text-arihant-green md:text-5xl">
               {stat.value}
             </p>
-            <p className="mt-2 text-sm text-gray-700">
+            <p className="mt-3 text-base text-gray-700">
               {stat.label}
             </p>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 }
+

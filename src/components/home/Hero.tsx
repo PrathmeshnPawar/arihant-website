@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { buttonVariants } from "@/components/ui/Button";
+"use client"; // Required for Framer Motion components
 
-const highlights = ["30+ years of market expertise", "2.5L+ active investors", "Research-backed recommendations"];
+import Link from "next/link";
+import { motion } from "framer-motion";
+import Button from "@/components/ui/Button";
+import { Reveal, RevealItem } from "../ui/Reveal";
 
 const highlights = [
   "30+ years of market expertise",
@@ -13,78 +13,99 @@ const highlights = [
 
 export default function Hero() {
   return (
-    <section className="bg-gradient-to-b from-arihant-violet-soft to-white">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-24 md:grid-cols-2">
-        <div>
-          <p className="inline-block rounded-full bg-arihant-green-soft px-4 py-2 text-xs font-semibold uppercase tracking-wide text-arihant-green">
-            Trusted since 1992
-          </p>
-          <h1 className="mt-6 text-4xl font-bold leading-tight text-arihant-violet md:text-5xl">
-            Invest smarter with <span className="text-arihant-green">clarity, confidence and care.</span>
-          </h1>
+    <section className="relative overflow-hidden bg-white pb-20 pt-24 lg:pt-32">
+      {/* Subtle background element for depth */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="absolute right-0 top-0 -z-10 h-[500px] w-[500px] rounded-full bg-arihant-violet-soft/50 blur-3xl"
+      />
 
-          <p className="mt-6 max-w-xl text-lg text-gray-600">
-            Explore equity, mutual funds, IPOs and advisory offerings designed to help you build long-term wealth.
-          </p>
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="lg:flex lg:items-center lg:gap-x-16">
+          <div className="max-w-2xl lg:flex-auto">
+            <Reveal staggerChildren={true}>
+              <RevealItem>
+                <div className="mb-8 flex">
+                  <span className="rounded-full bg-arihant-green/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-arihant-green">
+                    EST. 1992 • SEBI REGISTERED
+                  </span>
+                </div>
+              </RevealItem>
 
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Link href="/contact" className="rounded-full bg-arihant-green px-6 py-3 font-semibold text-white transition hover:bg-arihant-violet">
-              Open an Account
-            </Link>
-            <Link href="/about-us" className="rounded-full border border-arihant-violet/25 px-6 py-3 font-semibold text-arihant-violet transition hover:bg-arihant-violet-soft">
-              About Arihant
-            </Link>
+              <RevealItem>
+                <h1 className="text-5xl font-extrabold tracking-tight text-arihant-violet sm:text-6xl lg:text-7xl">
+                  Wealth creation, <br />
+                  <span className="text-arihant-green italic font-serif">
+                    refined.
+                  </span>
+                </h1>
+              </RevealItem>
+
+              <RevealItem>
+                <p className="mt-8 text-lg leading-8 text-slate-600">
+                  Navigate the Indian markets with institutional-grade research
+                  and personalized advisory.
+                </p>
+              </RevealItem>
+
+              <RevealItem>
+                <div className="mt-10 flex items-center gap-x-6">
+                  <Button size="lg" className="...">
+                    Get Started
+                  </Button>
+                </div>
+              </RevealItem>
+            </Reveal>
           </div>
 
-          <ul className="mt-7 space-y-2 text-sm text-gray-600">
-            {highlights.map((item) => (
-              <li key={item} className="flex items-center gap-2">
-                <span className="inline-block h-2 w-2 rounded-full bg-arihant-green" />
-                {item}
-              </li>
-            ))}
-          </ul>
+          {/* Animated Interactive Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.4,
+              ease: [0.21, 0.47, 0.32, 0.98],
+            }}
+            className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow"
+          >
+            {/* Subtle Float Animation */}
+            <motion.div
+              animate={{ y: [0, -12, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="rounded-3xl border border-slate-200 bg-slate-50/50 p-4 ring-1 ring-inset ring-white/10"
+            >
+              <div className="rounded-2xl bg-white p-8 shadow-xl shadow-slate-200/50">
+                <p className="text-sm font-medium text-slate-500">
+                  Nifty 50 Strategy
+                </p>
+                <div className="mt-2 flex items-baseline gap-x-2">
+                  <span className="text-4xl font-bold tracking-tight text-slate-900">
+                    Research-Led
+                  </span>
+                </div>
+                <div className="mt-6 space-y-4 border-t border-slate-100 pt-6">
+                  {["Equity Advisory", "Custom Portfolios", "Global Desk"].map(
+                    (item, idx) => (
+                      <motion.div
+                        key={item}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.6 + idx * 0.1 }}
+                        className="flex items-center text-sm text-slate-600"
+                      >
+                        <div className="mr-3 h-1.5 w-1.5 rounded-full bg-arihant-green" />
+                        {item}
+                      </motion.div>
+                    ),
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
-
-        <div className="rounded-3xl border border-arihant-green/20 bg-white p-8 shadow-sm">
-          <div className="rounded-2xl bg-arihant-violet p-6 text-white">
-            <p className="text-sm text-white/80">Today&apos;s market insights</p>
-            <h3 className="mt-2 text-xl font-semibold">Research-led recommendations</h3>
-            <p className="mt-4 text-sm text-white/80">
-              Daily market notes, thematic ideas and risk-aware insights to support every investor.
-            </p>
-          </div>
-          <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-            <div className="rounded-xl bg-arihant-green-soft p-4 text-arihant-violet">
-              <p className="font-bold text-2xl">2.5L+</p>
-              <p>Active investors</p>
-            </div>
-            <div className="rounded-xl bg-arihant-violet-soft p-4 text-arihant-violet">
-              <p className="font-bold text-2xl">30+</p>
-              <p>Years of trust</p>
-            </div>
-          </div>
-        </div>
-
-        <Card>
-          <CardContent className="p-5">
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Card className="border-0 bg-arihant-violet-soft p-4 shadow-none">
-                <p className="text-xs font-medium text-gray-500">Portfolio Value</p>
-                <p className="mt-2 text-2xl font-bold text-gray-900">₹ 18.42L</p>
-                <p className="text-sm text-arihant-green">+12.8% (1Y)</p>
-              </Card>
-              <Card className="border-0 bg-arihant-green-soft p-4 shadow-none">
-                <p className="text-xs font-medium text-gray-500">Watchlist</p>
-                <p className="mt-2 text-sm font-semibold text-gray-900">Nifty 50, Banking, Pharma</p>
-              </Card>
-              <Card className="p-4 sm:col-span-2">
-                <p className="text-xs font-medium text-gray-500">Today&apos;s Insight</p>
-                <p className="mt-1 text-sm text-gray-700">Stay invested with staggered allocation during volatile market sessions.</p>
-              </Card>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </section>
   );

@@ -1,3 +1,5 @@
+import { fadeUp, stagger } from "@/lib/animations";
+
 const timeline = [
   {
     year: "1992",
@@ -17,30 +19,42 @@ const timeline = [
   },
 ];
 
+import { motion } from "framer-motion";
+
 export function CompanyTimeline() {
   return (
-    <section className="bg-arihant-violet-soft py-20">
-      <div className="max-w-5xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-12">
+    <motion.section
+      className="bg-arihant-violet-soft py-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={stagger}
+    >
+      <div className="mx-auto max-w-5xl px-6">
+        <motion.h2
+          variants={fadeUp}
+          className="mb-14 text-center text-4xl font-bold text-arihant-violet"
+        >
           Our Journey
-        </h2>
+        </motion.h2>
 
-        <div className="space-y-8">
+        <motion.div variants={stagger} className="space-y-10">
           {timeline.map((item) => (
-            <div
+            <motion.div
               key={item.year}
-              className="flex gap-6 items-start"
+              variants={fadeUp}
+              className="flex items-start gap-8"
             >
-              <span className="text-arihant-green font-bold text-lg">
+              <span className="text-xl font-bold text-arihant-green md:text-2xl">
                 {item.year}
               </span>
-              <p className="text-gray-700">
+              <p className="text-lg leading-relaxed text-gray-700">
                 {item.event}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
