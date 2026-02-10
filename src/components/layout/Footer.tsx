@@ -3,23 +3,16 @@ import { siteConfig } from "@/config/navigation";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-white">
+    <footer className="border-t border-arihant-violet/20 bg-arihant-violet text-white">
       <div className="mx-auto max-w-7xl px-6 py-14">
-        <div className="grid gap-10 md:grid-cols-5">
-          <div className="md:col-span-2">
-            <h3 className="text-lg font-bold text-gray-900">Arihant Capital</h3>
-            <p className="mt-3 max-w-sm text-sm leading-relaxed text-gray-600">
-              Invest with confidence through research-driven products, dependable support, and a long-term approach to wealth creation.
-            </p>
-          </div>
-
-          {siteConfig.slice(0, 3).map((section) => (
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
+          {siteConfig.map((section) => (
             <div key={section.label}>
-              <h4 className="mb-4 text-sm font-semibold text-gray-900">{section.label}</h4>
+              <h3 className="mb-4 text-sm font-semibold text-white">{section.label}</h3>
               <ul className="space-y-2">
                 {section.children?.map((link) => (
                   <li key={link.label}>
-                    <Link href={link.href} className="text-sm text-gray-600 transition hover:text-arihant-green">
+                    <Link href={link.href} className="text-sm text-white/85 transition hover:text-arihant-green-soft">
                       {link.label}
                     </Link>
                   </li>
@@ -29,8 +22,12 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 rounded-2xl bg-arihant-violet-soft p-5 text-sm text-gray-700">
-          <strong>Disclaimer:</strong> Investments in securities market are subject to market risks. Read all scheme related documents carefully before investing.
+        <div className="mt-10 border-t border-white/20 pt-6 text-center">
+          <p className="text-xs leading-relaxed text-white/80">
+            <strong>Disclaimer:</strong> Investment in securities market are subject to market risks.
+            Read all related documents carefully before investing. Arihant Capital Markets Ltd | SEBI Reg No: INZ000180936.
+          </p>
+          <p className="mt-3 text-xs text-white/70">© {new Date().getFullYear()} Arihant Capital Markets Ltd.</p>
         </div>
 
         <p className="mt-6 text-center text-xs text-gray-500">© {new Date().getFullYear()} Arihant Capital Markets Ltd. All rights reserved.</p>
