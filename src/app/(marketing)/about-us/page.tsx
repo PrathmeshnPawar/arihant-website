@@ -1,4 +1,4 @@
-// src/app/about-us/page.tsx
+import Link from "next/link";
 import { AboutHero } from "@/components/about/Hero";
 import { StatsGrid } from "@/components/about/StatsGrid";
 import { CompanyTimeline } from "@/components/about/Timeline";
@@ -14,14 +14,14 @@ export default function AboutUsPage() {
       <CompanyTimeline />
       <AwardsSection />
 
-      {/* Final CTA to "Open an Account" before the footer */}
       <section className="bg-arihant-violet py-16 text-center text-white">
-        <h2 className="text-3xl font-bold mb-6">
-          Ready to generate wealth with us?
-        </h2>
-        <button className="bg-arihant-orange hover:bg-orange-600 text-white px-8 py-3 rounded-full font-bold transition-all">
+        <h2 className="mb-6 text-3xl font-bold">Ready to generate wealth with us?</h2>
+        <Link
+          href="/contact"
+          className="rounded-full bg-arihant-green px-8 py-3 font-bold text-white transition hover:bg-white hover:text-arihant-violet"
+        >
           Open an Account
-        </button>
+        </Link>
       </section>
     </main>
   );

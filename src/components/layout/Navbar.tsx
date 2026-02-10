@@ -1,82 +1,38 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { siteConfig } from "@/config/navigation";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-arihant-green text-white sticky top-0 z-50 shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20 items-center">
-          {/* Logo Section */}
-          <div className="shrink-0 flex flex-col">
-            <span className="text-2xl font-bold leading-none">
-              ArihantCapital
-            </span>
-            <span className="text-[10px] tracking-widest uppercase">
-              Generating Wealth
-            </span>
-          </div>
+    <nav className="sticky top-0 z-50 bg-arihant-violet text-white shadow-md">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+        <Link href="/" className="font-bold">Arihant Capital</Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8 items-center">
-            {siteConfig.map((item) => (
-              <div key={item.label} className="relative group">
-                <Link
-                  href={item.href || "#"}
-                  className="flex items-center text-sm font-medium hover:text-opacity-80 transition-all"
-                >
-                  {item.label}
-                  {item.children && <ChevronDown className="ml-1 w-4 h-4" />}
-                </Link>
-
-                {/* Dropdown Menu */}
-                {item.children && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-xl py-2 hidden group-hover:block transition-all">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.label}
-                        href={child.href}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-arihant-lightGreen hover:text-arihant-green"
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-
-            {/* CTA Buttons */}
-            <div className="flex items-center space-x-4 ml-4">
-              <Link
-                href="/login"
-                className="text-sm font-semibold hover:underline"
-              >
-                Login
-              </Link>
-              <Link
-                href="/open-account"
-                className="bg-arihant-orange text-white px-6 py-2 rounded-full font-bold text-sm hover:brightness-110 transition-all"
-              >
-                Open an Account
-              </Link>
-            </div>
-          </div>
-
-          {/* Mobile button */}
-          <div className="md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} className="p-2">
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
+        <div className="hidden items-center gap-5 md:flex">
+          <Link href="/products/equity">Products</Link>
+          <Link href="/research/blog">Research</Link>
+          <Link href="/tools/sip">Tools</Link>
+          <Link href="/about-us">About</Link>
+          <Link href="/contact" className="rounded-full bg-arihant-green px-4 py-2 text-sm font-semibold">Open Account</Link>
         </div>
+
+        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
-      {/* Mobile Menu log ic goes here... */}
+      {isOpen && (
+        <div className="space-y-3 border-t border-white/20 bg-arihant-violet px-4 py-4 text-sm md:hidden">
+          <Link href="/products/equity" className="block">Products</Link>
+          <Link href="/research/blog" className="block">Research</Link>
+          <Link href="/tools/sip" className="block">Tools</Link>
+          <Link href="/about-us" className="block">About</Link>
+          <Link href="/contact" className="block font-semibold text-arihant-green-soft">Open Account</Link>
+        </div>
+      )}
     </nav>
   );
 }

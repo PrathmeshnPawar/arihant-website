@@ -25,16 +25,16 @@ export const siteConfig = [
   {
     label: "Company",
     children: [
-      { label: "About Us", href: "/(marketing)/about-us" },
-      { label: "Contact", href: "/(marketing)/contact" },
-      { label: "Disclaimer", href: "/(marketing)/disclaimer" },
+      { label: "About Us", href: "/about-us" },
+      { label: "Contact", href: "/contact" },
+      { label: "Disclaimer", href: "/disclaimer" },
     ],
   },
   {
     label: "Account",
     children: [
-      { label: "Open Account", href: "/auth/open-account" },
-      { label: "Login", href: "/auth/login" },
+      { label: "Open Account", href: "/contact" },
+      { label: "Login", href: "/contact" },
     ],
   },
 ];

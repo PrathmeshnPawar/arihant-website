@@ -19,7 +19,7 @@ const timeline = [
 
 export function CompanyTimeline() {
   return (
-    <section className="bg-gray-50 py-20">
+    <section className="bg-arihant-violet-soft py-20">
       <div className="max-w-5xl mx-auto px-6">
         <h2 className="text-3xl font-bold text-center mb-12">
           Our Journey
@@ -34,7 +34,7 @@ export function CompanyTimeline() {
               <span className="text-arihant-green font-bold text-lg">
                 {item.year}
               </span>
-              <p className="text-gray-600">
+              <p className="text-gray-700">
                 {item.event}
               </p>
             </div>
