@@ -29,6 +29,8 @@ export default function Footer() {
           </p>
           <p className="mt-3 text-xs text-white/70">© {new Date().getFullYear()} Arihant Capital Markets Ltd.</p>
         </div>
+
+        <p className="mt-6 text-center text-xs text-gray-500">© {new Date().getFullYear()} Arihant Capital Markets Ltd. All rights reserved.</p>
       </div>
     </footer>
   );

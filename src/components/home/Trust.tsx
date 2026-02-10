@@ -1,8 +1,8 @@
 const stats = [
   { label: "Years of Experience", value: "30+" },
-  { label: "Active Investors", value: "2.5+ Lakh" },
+  { label: "Active Investors", value: "2.5L+" },
   { label: "Corporate Clients", value: "1000+" },
-  { label: "Pan India Presence", value: "120+ Cities" },
+  { label: "Cities Covered", value: "120+" },
 ];
 
 export default function Trust() {

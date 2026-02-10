@@ -1,5 +1,11 @@
 import Link from "next/link";
 
+const highlights = [
+  "30+ years of market expertise",
+  "2.5L+ active investors",
+  "Research-backed calls and insights",
+];
+
 export default function Hero() {
   return (
     <section className="bg-gradient-to-b from-arihant-violet-soft to-white">
@@ -24,6 +30,15 @@ export default function Hero() {
               About Arihant
             </Link>
           </div>
+
+          <ul className="mt-7 space-y-2 text-sm text-gray-600">
+            {highlights.map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <span className="inline-block h-2 w-2 rounded-full bg-arihant-green" />
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="rounded-3xl border border-arihant-green/20 bg-white p-8 shadow-sm">
