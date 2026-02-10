@@ -7,16 +7,12 @@ const stats = [
 
 export default function Trust() {
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <section className="bg-arihant-violet py-20">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 text-center text-white md:grid-cols-4">
         {stats.map((stat) => (
           <div key={stat.label}>
-            <p className="text-3xl font-bold text-arihant-green">
-              {stat.value}
-            </p>
-            <p className="mt-2 text-sm text-gray-600">
-              {stat.label}
-            </p>
+            <p className="text-3xl font-bold text-arihant-green-soft">{stat.value}</p>
+            <p className="mt-2 text-sm text-white/85">{stat.label}</p>
           </div>
         ))}
       </div>

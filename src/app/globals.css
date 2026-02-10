@@ -1,15 +1,19 @@
-/* src/app/globals.css - Improved */
 @import "tailwindcss";
 
 @theme inline {
-  --color-arihant-green: #16a34a;    /* green-600 */
-  --color-arihant-lightGreen: #f0fdf4; /* green-50 */
-  --color-arihant-orange: #f97316;   /* orange-500 */
-  --color-arihant-violet: #4c1d95;   /* violet-950 */
+  --color-arihant-green: #34b350;
+  --color-arihant-green-soft: #e9f8ec;
+  --color-arihant-violet: #5b3b8f;
+  --color-arihant-violet-soft: #f3effb;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #1f2937;
 }
 
 body {
-  @apply antialiased selection:bg-arihant-green/20;
+  @apply antialiased selection:bg-arihant-green/30;
   background: var(--background);
   color: var(--foreground);
 }
