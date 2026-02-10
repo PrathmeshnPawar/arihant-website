@@ -1,29 +1,20 @@
+import Button from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/card";
+import Input from "@/components/ui/input";
+
 export default function SIPCalculator() {
   return (
-    <section className="max-w-3xl mx-auto px-6 py-20">
-      <h1 className="text-3xl font-bold">SIP Calculator</h1>
+    <section className="mx-auto max-w-3xl px-6 py-20">
+      <h1 className="text-3xl font-bold text-arihant-violet">SIP Calculator</h1>
 
-      <div className="mt-8 grid gap-4">
-        <input
-          type="number"
-          placeholder="Monthly Investment"
-          className="border p-3 rounded-md"
-        />
-        <input
-          type="number"
-          placeholder="Expected Return (%)"
-          className="border p-3 rounded-md"
-        />
-        <input
-          type="number"
-          placeholder="Duration (years)"
-          className="border p-3 rounded-md"
-        />
-
-        <button className="bg-green-600 text-white py-3 rounded-md">
-          Calculate
-        </button>
-      </div>
+      <Card className="mt-8">
+        <CardContent className="grid gap-4 p-6">
+          <Input type="number" placeholder="Monthly Investment" />
+          <Input type="number" placeholder="Expected Return (%)" />
+          <Input type="number" placeholder="Duration (years)" />
+          <Button className="rounded-md">Calculate</Button>
+        </CardContent>
+      </Card>
     </section>
   );
 }

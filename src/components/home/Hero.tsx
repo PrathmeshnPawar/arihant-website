@@ -1,44 +1,61 @@
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/Button";
+
+const highlights = ["30+ years of market expertise", "2.5L+ active investors", "Research-backed recommendations"];
 
 export default function Hero() {
   return (
     <section className="bg-white">
-      <div className="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-center">
-        {/* Left content */}
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:grid-cols-2 md:py-20">
         <div>
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
-            Build your wealth{" "}
-            <span className="text-arihant-green">with confidence</span>
+          <Badge>Trusted Investing Partner</Badge>
+          <h1 className="mt-5 text-4xl font-bold leading-tight text-gray-900 md:text-5xl">
+            Build long-term wealth with <span className="text-arihant-green">clarity and confidence.</span>
           </h1>
-
-          <p className="mt-6 text-lg text-gray-600 max-w-xl">
-            Equity, Mutual Funds, IPOs, and long-term investing solutions
-            backed by 30+ years of market expertise.
+          <p className="mt-4 max-w-xl text-lg text-gray-600">
+            Invest in equity, mutual funds and IPOs with a clean, easy-to-use experience and expert guidance at every step.
           </p>
 
-          <div className="mt-8 flex gap-4">
-            <Link
-              href="/auth/open-account"
-              className="bg-arihant-green hover:bg-green-700 text-white px-6 py-3 rounded-full font-semibold transition"
-            >
-              Open an Account
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link href="/contact" className={buttonVariants({ variant: "default" })}>
+              Open Account
             </Link>
-
-            <Link
-              href="/(marketing)/contact"
-              className="border border-gray-300 px-6 py-3 rounded-full font-semibold text-gray-700 hover:bg-gray-50 transition"
-            >
-              Talk to an Advisor
+            <Link href="/products/equity" className={buttonVariants({ variant: "outline" })}>
+              Explore Products
             </Link>
           </div>
+
+          <ul className="mt-6 space-y-2 text-sm text-gray-600">
+            {highlights.map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <span className="inline-block h-2 w-2 rounded-full bg-arihant-green" />
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* Right visual */}
-        <div className="hidden md:flex items-center justify-center">
-          <div className="w-full h-80 rounded-2xl bg-gradient-to-br from-green-100 to-green-50 flex items-center justify-center text-arihant-green font-semibold">
-            Platform Preview
-          </div>
-        </div>
+        <Card>
+          <CardContent className="p-5">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Card className="border-0 bg-arihant-violet-soft p-4 shadow-none">
+                <p className="text-xs font-medium text-gray-500">Portfolio Value</p>
+                <p className="mt-2 text-2xl font-bold text-gray-900">₹ 18.42L</p>
+                <p className="text-sm text-arihant-green">+12.8% (1Y)</p>
+              </Card>
+              <Card className="border-0 bg-arihant-green-soft p-4 shadow-none">
+                <p className="text-xs font-medium text-gray-500">Watchlist</p>
+                <p className="mt-2 text-sm font-semibold text-gray-900">Nifty 50, Banking, Pharma</p>
+              </Card>
+              <Card className="p-4 sm:col-span-2">
+                <p className="text-xs font-medium text-gray-500">Today&apos;s Insight</p>
+                <p className="mt-1 text-sm text-gray-700">Stay invested with staggered allocation during volatile market sessions.</p>
+              </Card>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </section>
   );
