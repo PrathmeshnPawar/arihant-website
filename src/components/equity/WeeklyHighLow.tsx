@@ -6,25 +6,29 @@ interface Props {
 }
 
 export function WeeklyHighLow({ weekly }: Props) {
-  if (!weekly) return null;
-
   return (
     <EquityCard title="Weekly High / Low">
-      <div className="space-y-3 text-lg font-medium">
-        <div className="flex justify-between">
-          <span>High</span>
-          <span className="text-emerald-600">
-            ${weekly.high}
-          </span>
-        </div>
+      {!weekly ? (
+        <p className="text-sm text-gray-500">
+          Weekly data temporarily unavailable.
+        </p>
+      ) : (
+        <div className="space-y-3 text-lg font-medium">
+          <div className="flex justify-between">
+            <span>High</span>
+            <span className="text-emerald-600">
+              ${weekly.high}
+            </span>
+          </div>
 
-        <div className="flex justify-between">
-          <span>Low</span>
-          <span className="text-red-600">
-            ${weekly.low}
-          </span>
+          <div className="flex justify-between">
+            <span>Low</span>
+            <span className="text-red-600">
+              ${weekly.low}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
     </EquityCard>
   );
 }
