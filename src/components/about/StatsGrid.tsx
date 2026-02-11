@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { fadeUp, stagger } from "@/lib/animations";
 
@@ -8,20 +10,26 @@ const stats = [
   { label: "Pan India Presence", value: "120+ Cities" },
 ];
 
-
-
 export function StatsGrid() {
   return (
     <motion.section
       className="bg-arihant-violet-soft py-20"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.3 }}
       variants={stagger}
     >
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-10 px-6 text-center md:grid-cols-4">
         {stats.map((stat) => (
-          <motion.div key={stat.label} variants={fadeUp}>
+          <motion.div
+            key={stat.label}
+            variants={fadeUp}
+            whileHover={{
+              y: -4,
+              transition: { duration: 0.2 },
+            }}
+            className="cursor-default"
+          >
             <p className="text-4xl font-bold text-arihant-green md:text-5xl">
               {stat.value}
             </p>
@@ -34,4 +42,3 @@ export function StatsGrid() {
     </motion.section>
   );
 }
-

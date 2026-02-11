@@ -1,34 +1,68 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { fadeUp, stagger } from "@/lib/animations";
+
 const values = [
   {
-    title: "Integrity",
-    description: "We operate with transparency and honesty in everything we do.",
+    title: "Straightforward",
+    description:
+      "We are open and transparent with our customers and with each other",
   },
   {
-    title: "Research Driven",
-    description: "Every recommendation is backed by data, analysis, and expertise.",
+    title: "Humble",
+    description:
+      "We seek and value feedback to serve you better and get better everyday",
   },
   {
-    title: "Client First",
-    description: "Our success is measured by the long-term success of our clients.",
+    title: "You first",
+    description:
+      "Keeping our clients first — because they are at the heart of everything we do",
   },
   {
-    title: "Discipline",
-    description: "We believe consistent, disciplined investing builds real wealth.",
+    title: "Gritty",
+    description:
+      "We constantly work towards creating value for our clients through objective advice",
+  },
+  {
+    title: "Curious",
+    description:
+      "We are constantly learning and improving to enhance client experience through innovation",
+  },
+  {
+    title: "Simplicity",
+    description:
+      "Making investments simple, understandable and accessible to everyone",
   },
 ];
 
 export function CoreValues() {
   return (
-    <section className="py-24">
+    <motion.section
+      className="py-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={stagger}
+    >
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="mb-14 text-center text-4xl font-bold text-arihant-violet">
-          Our Core Values
-        </h2>
-
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <motion.h2
+          variants={fadeUp}
+          className="mb-14 text-center text-4xl font-bold text-arihant-violet"
+        >
+          Our Values
+          
+        </motion.h2>
+        
+        <motion.div
+          variants={stagger}
+          className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3"
+        >
           {values.map((value) => (
-            <div
+            <motion.div
               key={value.title}
+              variants={fadeUp}
+              whileHover={{ y: -4 }}
               className="rounded-2xl border border-arihant-violet/20 bg-white p-8 text-center transition hover:shadow-md"
             >
               <h3 className="text-xl font-semibold text-arihant-violet">
@@ -37,10 +71,10 @@ export function CoreValues() {
               <p className="mt-4 text-base leading-relaxed text-gray-700">
                 {value.description}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

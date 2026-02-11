@@ -4,12 +4,14 @@ import { StatsGrid } from "@/components/about/StatsGrid";
 import { CompanyTimeline } from "@/components/about/Timeline";
 import { CoreValues } from "@/components/about/CoreValues";
 import { AwardsSection } from "@/components/about/Awards";
+import { WhatWeOffer } from "@/components/about/WhatWeOffer";
 
 export default function AboutUsPage() {
   return (
     <main className="bg-white">
       <AboutHero />
       <StatsGrid />
+      <WhatWeOffer/>
       <CoreValues />
       <CompanyTimeline />
       <AwardsSection />

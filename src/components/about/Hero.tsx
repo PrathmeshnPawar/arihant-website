@@ -1,5 +1,7 @@
+"use client";
+
 import { motion } from "framer-motion";
-import { fadeUp, stagger } from "@/lib/animations"
+import { fadeUp, stagger } from "@/lib/animations";
 
 export function AboutHero() {
   return (
@@ -7,7 +9,7 @@ export function AboutHero() {
       className="mx-auto max-w-7xl px-6 py-28 text-center"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.4 }}
       variants={stagger}
     >
       <motion.h1

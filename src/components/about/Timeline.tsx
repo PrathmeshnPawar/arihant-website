@@ -1,25 +1,14 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { fadeUp, stagger } from "@/lib/animations";
 
 const timeline = [
-  {
-    year: "1992",
-    event: "Arihant Capital founded with a vision of ethical investing.",
-  },
-  {
-    year: "2005",
-    event: "Expanded operations across major Indian cities.",
-  },
-  {
-    year: "2015",
-    event: "Launched digital trading platforms for retail investors.",
-  },
-  {
-    year: "2024",
-    event: "Serving over 2.5 lakh investors nationwide.",
-  },
+  { year: "1992", event: "Arihant Capital founded with a vision of ethical investing." },
+  { year: "2005", event: "Expanded operations across major Indian cities." },
+  { year: "2015", event: "Launched digital trading platforms for retail investors." },
+  { year: "2024", event: "Serving over 2.5 lakh investors nationwide." },
 ];
-
-import { motion } from "framer-motion";
 
 export function CompanyTimeline() {
   return (
@@ -27,7 +16,7 @@ export function CompanyTimeline() {
       className="bg-arihant-violet-soft py-24"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.25 }}
       variants={stagger}
     >
       <div className="mx-auto max-w-5xl px-6">
@@ -43,6 +32,7 @@ export function CompanyTimeline() {
             <motion.div
               key={item.year}
               variants={fadeUp}
+              whileHover={{ x: 6 }}
               className="flex items-start gap-8"
             >
               <span className="text-xl font-bold text-arihant-green md:text-2xl">
