@@ -6,6 +6,7 @@ import { fadeUp, stagger } from "@/lib/animations";
 interface RevealProps {
   children: React.ReactNode;
   staggerChildren?: boolean;
+  delay?:number;
 }
 
 export const Reveal = ({ children, staggerChildren = false }: RevealProps) => {
