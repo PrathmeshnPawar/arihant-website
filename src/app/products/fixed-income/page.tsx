@@ -1,4 +1,3 @@
-"use client";
 
 import { BondsSection } from "@/components/fixed-income/BondsSection";
 import { ShieldCheck, Landmark, FileText, BarChart3 } from "lucide-react";
