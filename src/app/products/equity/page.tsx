@@ -11,7 +11,14 @@ import { WeeklyHighLow } from "@/components/equity/WeeklyHighLow";
 import { getQuote, getWeeklyHighLow, getNews } from "@/lib/alphaVantage";
 import type { Quote } from "@/types/market";
 import { TodayMarkets } from "@/components/equity/TodayMarkets";
-
+export const metadata = {
+title: "Equity Trading & Investment Services | Arihant",
+  description:
+ "Trade and invest in equities with real-time market insights, research reports, and advanced trading tools.",
+  alternates: {
+     canonical: "https://arihant-website-356i.vercel.app/products/equity",
+  },
+};
 export default async function EquityPage() {
   const symbols = ["AAPL", "MSFT", "GOOGL"];
 

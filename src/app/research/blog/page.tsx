@@ -18,7 +18,13 @@ async function getPosts() {
 }
 
 
-
+export const metadata = {
+title: "Market Insights & Research Blog | Arihant",
+  description:
+ "Read IPO analysis, investment strategies, and market insights from Arihant’s research team.",  alternates: {
+     canonical: "https://arihant-website-356i.vercel.app/research/blog",
+  },
+};
 
 type Post = {
   _id: string;

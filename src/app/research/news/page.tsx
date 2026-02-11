@@ -1,3 +1,11 @@
+export const metadata = {
+title: "Stock Market News & Updates | Arihant",
+  description:
+ "Stay updated with the latest financial news, market developments, and investment trends.",  alternates: {
+     canonical: "https://arihant-website-356i.vercel.app/research/news",
+  },
+};
+
 const news = [
   "Nifty closes higher on banking and IT momentum.",
   "RBI keeps policy rates unchanged; focus remains on inflation control.",

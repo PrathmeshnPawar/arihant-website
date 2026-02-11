@@ -1,3 +1,14 @@
+export const metadata = {
+  title: "About Arihant Capital – Trusted Investment Partner",
+  description:
+       "Read Arihant Capital’s privacy policy, security policy, risk disclosures, and legal disclaimers.",
+ robots: {
+    index: false,   // ✅ IMPORTANT (legal pages usually noindex)
+    follow: true,
+  },
+};
+
+
 export default function PrivacyAndSecurityPage() {
   return (
     <main className="bg-white">

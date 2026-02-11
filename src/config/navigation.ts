@@ -4,7 +4,7 @@ export const siteConfig = [
     children: [
       { label: "Equity", href: "/products/equity" },
       { label: "Mutual Funds", href: "/products/mutual-funds" },
-      { label: "IPO", href: "/products/ipo" },
+      { label: "Fixed Income", href: "/products/fixed-income" },
     ],
   },
   {

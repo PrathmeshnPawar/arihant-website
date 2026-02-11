@@ -1,8 +1,18 @@
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
+export const metadata = {
+  title: "Contact Arihant Capital – Open Your Investment Account",
+  description:
+    "Get in touch with Arihant Capital for account opening, investment services, and support. Start your wealth-building journey today.",
+  alternates: {
+    canonical: "https://arihant-website-356i.vercel.app/contact",
+  },
+};
+
 
 export default function ContactPage() {
+  
   return (
     <section className="mx-auto max-w-4xl px-6 py-20">
       <div className="text-center">
