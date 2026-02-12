@@ -34,7 +34,7 @@ export default async function EquityPage() {
   const news = await getNews();
 
   return (
-    <div className="bg-gradient-to-b from-white to-emerald-50/30 min-h-screen py-14">
+    <div className="bg-linear-to-b from-white to-emerald-50/30 min-h-screen py-14">
       <div className="mx-auto max-w-7xl px-6 space-y-16">
 
         <EquityHeader />

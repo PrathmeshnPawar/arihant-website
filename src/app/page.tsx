@@ -8,7 +8,7 @@ export const metadata = {
   description:
     "Invest in Equities, Bonds, Mutual Funds, IPOs and Fixed Income products with Arihant. Research-driven strategies and disciplined investing.",
   alternates: {
-    canonical: "https://yourdomain.com",
+    canonical: "https://arihant-website-356i.vercel.app",
   },
 };
 

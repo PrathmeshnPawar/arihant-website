@@ -19,6 +19,9 @@ interface Props {
 }
 
 export function MarketChart({ data }: Props) {
+
+  if (typeof window === "undefined") return null; // ✅ CRITICAL FIX
+
   return (
     <div className="h-64 w-full">
       <ResponsiveContainer width="100%" height="100%">
