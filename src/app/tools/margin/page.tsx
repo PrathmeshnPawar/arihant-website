@@ -6,9 +6,10 @@ import CalculatorTabs from "@/components/CalculatorTabs";
 
 export default function MarginCalculator() {
   const router = useRouter();
-  const [tradeValue, setTradeValue] = useState(100000);
-  const [leverage, setLeverage] = useState(5);
-  const [marginPct, setMarginPct] = useState(20);
+
+  const [tradeValue, setTradeValue] = useState<number>(100000);
+  const [leverage, setLeverage] = useState<number>(5);
+  const [marginPct, setMarginPct] = useState<number>(20);
 
   const { requiredMargin, exposure } = useMemo(() => {
     const requiredMargin = tradeValue * (marginPct / 100);
@@ -22,7 +23,6 @@ export default function MarginCalculator() {
 
   return (
     <section className="mx-auto max-w-4xl px-6 py-16">
-      {/*<CalculatorTabs />*/}
       <h1 className="text-4xl font-bold text-arihant-violet mb-8">
         Margin Calculator
       </h1>
@@ -38,20 +38,15 @@ export default function MarginCalculator() {
         <Field label="Margin (%)" value={marginPct} onChange={setMarginPct} />
 
         <div className="mt-8 grid grid-cols-2 gap-4">
-          <Stat
-            label="Required Margin"
-            value={`₹ ${requiredMargin.toLocaleString()}`}
-            highlight
-          />
-          <Stat
-            label="Effective Exposure"
-            value={`₹ ${exposure.toLocaleString()}`}
-          />
+          <Stat label="Required Margin" value={requiredMargin} highlight />
+          <Stat label="Effective Exposure" value={exposure} />
         </div>
       </div>
+
       <div className="mt-6">
         <CalculatorTabs />
       </div>
+
       <div className="mt-10 rounded-2xl border border-border/40 bg-white p-6 text-sm text-gray-600 shadow-sm">
         <h3 className="text-base font-semibold text-arihant-violet mb-3">
           How this calculator works
@@ -78,12 +73,23 @@ export default function MarginCalculator() {
   );
 }
 
-function Field({ label, value, onChange, prefix }: any) {
+/* ================= Field ================= */
+
+interface FieldProps {
+  label: string;
+  value: number;
+  onChange: (value: number) => void;
+  prefix?: string;
+}
+
+function Field({ label, value, onChange, prefix }: FieldProps) {
   return (
     <div className="mb-5">
       <label className="text-sm font-medium text-gray-700">{label}</label>
+
       <div className="mt-1 flex items-center rounded-lg border border-border/40 px-4">
         {prefix && <span className="text-gray-500 mr-2">{prefix}</span>}
+
         <input
           type="number"
           value={value}
@@ -95,18 +101,29 @@ function Field({ label, value, onChange, prefix }: any) {
   );
 }
 
-function Stat({ label, value, highlight }: any) {
+/* ================= Stat ================= */
+
+interface StatProps {
+  label: string;
+  value: number;
+  highlight?: boolean;
+}
+
+function Stat({ label, value, highlight }: StatProps) {
   return (
     <div
-      className={`rounded-xl border border-border/40 p-4 text-center ${
+      className={`rounded-xl border border-border/40 p-4 text-center transition ${
         highlight ? "bg-emerald-50" : "bg-white"
       }`}
     >
-      <p className="text-xs text-gray-500">{label}</p>
+      <p className="text-xs text-gray-500 mb-1">{label}</p>
+
       <p
-        className={`text-lg font-semibold ${highlight ? "text-arihant-green" : ""}`}
+        className={`text-lg font-semibold tabular-nums ${
+          highlight ? "text-arihant-green" : "text-gray-900"
+        }`}
       >
-        {value}
+        ₹ {value.toLocaleString("en-IN")}
       </p>
     </div>
   );

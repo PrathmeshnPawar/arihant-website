@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { dummyEquityFutures } from "@/utils/EquityFuturesData";
-import CalculationModal from "./CalculationModal";
+import CalculationModal, { Contract } from "./CalculationModal";
 
 /* ================= TYPES ================= */
 
@@ -33,12 +33,13 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 }
 
-function getComparator<Key extends keyof any>(order: Order, orderBy: Key) {
+function getComparator<T>(
+  order: Order,
+  orderBy: keyof T,
+): (a: T, b: T) => number {
   return order === "desc"
-    ? (a: Record<Key, any>, b: Record<Key, any>) =>
-        descendingComparator(a, b, orderBy)
-    : (a: Record<Key, any>, b: Record<Key, any>) =>
-        -descendingComparator(a, b, orderBy);
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 /* ================= COMPONENT ================= */
@@ -47,7 +48,9 @@ export default function EquityFuturesTable() {
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof Row>("contract");
 
-  const [selectedContract, setSelectedContract] = useState<Row | null>(null);
+  const [selectedContract, setSelectedContract] = useState<Contract | null>(
+    null,
+  );
   const [modalOpen, setModalOpen] = useState(false);
   const [cashAvailable, setCashAvailable] = useState<number | string>(100000);
 
@@ -100,7 +103,12 @@ export default function EquityFuturesTable() {
               <tr
                 key={row.id}
                 onClick={() => {
-                  setSelectedContract(row);
+                  setSelectedContract({
+                    contract: row.contract,
+                    expiry: row.expiry,
+                    lotSize: row.lotSize,
+                    nrmlMargin: row.nrmlMargin,
+                  });
                   setModalOpen(true);
                 }}
                 className="border-t hover:bg-gray-50 cursor-pointer"

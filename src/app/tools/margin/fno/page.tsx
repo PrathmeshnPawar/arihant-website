@@ -227,22 +227,36 @@ export default function FnOMarginCalculator() {
 }
 
 /* ================= UI Helpers ================= */
+interface InputProps {
+  label: string;
+  value: string | number;
+  onChange: (value: string) => void;
+  type?: React.HTMLInputTypeAttribute;
+}
 
-function Input({ label, value, onChange, type = "text" }: any) {
+function Input({ label, value, onChange, type = "text" }: InputProps) {
   return (
     <div>
       <label className="text-xs text-gray-500">{label}</label>
+
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1 w-full rounded-lg border border-border/40 px-3 py-2 text-sm "
+        className="mt-1 w-full rounded-lg border border-border/40 px-3 py-2 text-sm"
       />
     </div>
   );
 }
 
-function Select({ label, value, options, onChange }: any) {
+interface SelectProps {
+  label: string;
+  value: string;
+  options: string[];
+  onChange: (value: string) => void;
+}
+
+function Select({ label, value, options, onChange }: SelectProps) {
   return (
     <div>
       <label className="text-xs text-gray-500">{label}</label>
@@ -251,7 +265,7 @@ function Select({ label, value, options, onChange }: any) {
         onChange={(e) => onChange(e.target.value)}
         className="mt-1 w-full rounded-lg border border-border/40 px-3 py-2 text-sm"
       >
-        {options.map((o: any) => (
+        {options.map((o: string) => (
           <option key={o} value={o}>
             {o}
           </option>
@@ -261,7 +275,13 @@ function Select({ label, value, options, onChange }: any) {
   );
 }
 
-function Radio({ label, checked, onChange }: any) {
+interface RadioProps {
+  label: string;
+  checked: boolean;
+  onChange: () => void;
+}
+
+function Radio({ label, checked, onChange }: RadioProps) {
   return (
     <label className="flex items-center gap-2 cursor-pointer">
       <input type="radio" checked={checked} onChange={onChange} />
