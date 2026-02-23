@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import { Reveal, RevealItem } from "../ui/Reveal";
-import WealthScene from "@/components/3d/WealthScene";
+//import WealthScene from "@/components/3d/WealthScene";
 
 
 const highlights = [
@@ -18,7 +18,7 @@ export default function Hero() {
     <section className="relative overflow-hidden bg-white pb-20 pt-24 lg:pt-32">
       
       {/* Soft Ambient Background Glow */}
-       <WealthScene />
+       {/* <WealthScene /> */}
 
   {/* Soft Ambient Glow Still Works */}
   <motion.div
