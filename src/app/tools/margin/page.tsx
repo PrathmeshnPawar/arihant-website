@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
+import CalculatorTabs from "@/components/CalculatorTabs";
 
 export default function MarginCalculator() {
+  const router = useRouter();
   const [tradeValue, setTradeValue] = useState(100000);
   const [leverage, setLeverage] = useState(5);
   const [marginPct, setMarginPct] = useState(20);
@@ -19,41 +22,58 @@ export default function MarginCalculator() {
 
   return (
     <section className="mx-auto max-w-4xl px-6 py-16">
+      {/*<CalculatorTabs />*/}
       <h1 className="text-4xl font-bold text-arihant-violet mb-8">
         Margin Calculator
       </h1>
 
       <div className="rounded-3xl border border-border/40 bg-white p-8 shadow-sm">
-        <Field label="Trade Value" value={tradeValue} onChange={setTradeValue} prefix="₹" />
+        <Field
+          label="Trade Value"
+          value={tradeValue}
+          onChange={setTradeValue}
+          prefix="₹"
+        />
         <Field label="Leverage" value={leverage} onChange={setLeverage} />
         <Field label="Margin (%)" value={marginPct} onChange={setMarginPct} />
 
         <div className="mt-8 grid grid-cols-2 gap-4">
-          <Stat label="Required Margin" value={`₹ ${requiredMargin.toLocaleString()}`} highlight />
-          <Stat label="Effective Exposure" value={`₹ ${exposure.toLocaleString()}`} />
+          <Stat
+            label="Required Margin"
+            value={`₹ ${requiredMargin.toLocaleString()}`}
+            highlight
+          />
+          <Stat
+            label="Effective Exposure"
+            value={`₹ ${exposure.toLocaleString()}`}
+          />
         </div>
       </div>
+      <div className="mt-6">
+        <CalculatorTabs />
+      </div>
       <div className="mt-10 rounded-2xl border border-border/40 bg-white p-6 text-sm text-gray-600 shadow-sm">
-  <h3 className="text-base font-semibold text-arihant-violet mb-3">
-    How this calculator works
-  </h3>
+        <h3 className="text-base font-semibold text-arihant-violet mb-3">
+          How this calculator works
+        </h3>
 
-  <p className="mb-2">
-    Margin trading allows investors to take positions larger than their available
-    capital by using leverage. The calculator estimates the capital required to
-    open a position based on trade value and margin percentage.
-  </p>
+        <p className="mb-2">
+          Margin trading allows investors to take positions larger than their
+          available capital by using leverage. The calculator estimates the
+          capital required to open a position based on trade value and margin
+          percentage.
+        </p>
 
-  <p className="mb-2">
-    Higher leverage increases potential gains but also amplifies risk. Market
-    movements may require additional funds to maintain positions.
-  </p>
+        <p className="mb-2">
+          Higher leverage increases potential gains but also amplifies risk.
+          Market movements may require additional funds to maintain positions.
+        </p>
 
-  <p className="text-xs text-gray-400 mt-3">
-    * Margin requirements may vary based on exchange rules and risk policies.
-  </p>
-</div>
-
+        <p className="text-xs text-gray-400 mt-3">
+          * Margin requirements may vary based on exchange rules and risk
+          policies.
+        </p>
+      </div>
     </section>
   );
 }
@@ -71,9 +91,7 @@ function Field({ label, value, onChange, prefix }: any) {
           className="w-full py-3 outline-none"
         />
       </div>
-      
     </div>
-    
   );
 }
 
@@ -85,7 +103,9 @@ function Stat({ label, value, highlight }: any) {
       }`}
     >
       <p className="text-xs text-gray-500">{label}</p>
-      <p className={`text-lg font-semibold ${highlight ? "text-arihant-green" : ""}`}>
+      <p
+        className={`text-lg font-semibold ${highlight ? "text-arihant-green" : ""}`}
+      >
         {value}
       </p>
     </div>

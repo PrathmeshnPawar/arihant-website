@@ -76,11 +76,7 @@ const handleClose = () => {
         "
       >
         {group.label}
-        <ChevronDown
-          className={`h-4 w-4 transition-transform ${
-            activeMenu === group.label ? "rotate-180" : ""
-          }`}
-        />
+       
       </button>
 
     </DropdownMenuTrigger>

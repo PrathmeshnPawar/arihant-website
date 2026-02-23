@@ -2,7 +2,7 @@ export const siteConfig = [
   {
     label: "Products",
     children: [
-      { label: "Equity", href: "/products/equity" },
+      { label: "Equity", href: "/products/equity-product" },
       { label: "Mutual Funds", href: "/products/mutual-funds" },
       { label: "Fixed Income", href: "/products/fixed-income" },
     ],

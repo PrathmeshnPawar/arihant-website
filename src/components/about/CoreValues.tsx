@@ -2,39 +2,55 @@
 
 import { motion } from "framer-motion";
 import { fadeUp, stagger } from "@/lib/animations";
+import {
+  BadgeCheck,
+  Heart,
+  User,
+  Mountain,
+  Sparkles,
+  Circle,
+} from "lucide-react";
+
 
 const values = [
   {
     title: "Straightforward",
+    icon: BadgeCheck,
     description:
       "We are open and transparent with our customers and with each other",
   },
   {
     title: "Humble",
+    icon: Heart,
     description:
       "We seek and value feedback to serve you better and get better everyday",
   },
   {
     title: "You first",
+    icon: User,
     description:
       "Keeping our clients first — because they are at the heart of everything we do",
   },
   {
     title: "Gritty",
+    icon: Mountain,
     description:
       "We constantly work towards creating value for our clients through objective advice",
   },
   {
     title: "Curious",
+    icon: Sparkles,
     description:
       "We are constantly learning and improving to enhance client experience through innovation",
   },
   {
     title: "Simplicity",
+    icon: Circle,
     description:
       "Making investments simple, understandable and accessible to everyone",
   },
 ];
+
 
 export function CoreValues() {
   return (
@@ -58,21 +74,31 @@ export function CoreValues() {
           variants={stagger}
           className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {values.map((value) => (
-            <motion.div
-              key={value.title}
-              variants={fadeUp}
-              whileHover={{ y: -4 }}
-              className="rounded-2xl border border-arihant-violet/20 bg-white p-8 text-center transition hover:shadow-md"
-            >
-              <h3 className="text-xl font-semibold text-arihant-violet">
-                {value.title}
-              </h3>
-              <p className="mt-4 text-base leading-relaxed text-gray-700">
-                {value.description}
-              </p>
-            </motion.div>
-          ))}
+          {values.map((value) => {
+  const Icon = value.icon;
+
+  return (
+    <motion.div
+      key={value.title}
+      variants={fadeUp}
+      whileHover={{ y: -4 }}
+      className="rounded-2xl border border-arihant-violet/20 bg-white p-8 text-center transition hover:shadow-md"
+    >
+      <div className="mb-4 flex justify-center">
+        <Icon className="h-6 w-6 text-arihant-green" strokeWidth={1.75} />
+      </div>
+
+      <h3 className="text-xl font-semibold text-arihant-violet">
+        {value.title}
+      </h3>
+
+      <p className="mt-4 text-base leading-relaxed text-gray-700">
+        {value.description}
+      </p>
+    </motion.div>
+  );
+})}
+
         </motion.div>
       </div>
     </motion.section>

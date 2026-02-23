@@ -1,8 +1,14 @@
-export default function MutualFundsPage() {
-  return (
-    <section className="mx-auto max-w-5xl px-6 py-20">
-      <h1 className="text-3xl font-bold text-arihant-violet">Mutual Funds</h1>
-      <p className="mt-4 text-gray-700">Invest in top-performing mutual funds curated by our research experts.</p>
-    </section>
-  );
+import type { Metadata } from "next";
+import MutualFundsContent from "./MutualFundsContent";
+
+export const metadata: Metadata = {
+  title: "Mutual Funds – Invest Smarter with SIP & Long Term Growth | Arihant",
+  description: "Invest in carefully selected mutual funds with Arihant. Start SIPs, build long-term wealth, and diversify your portfolio with expert-backed research.",
+  alternates: {
+    canonical: "https://arihant-website-356i.vercel.app/products/mutual-funds",
+  },
+};
+
+export default function Page() {
+  return <MutualFundsContent />;
 }
