@@ -25,7 +25,7 @@ export default function Hero() {
     initial={{ opacity: 0, scale: 0.8 }}
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 1.5, ease: "easeOut" }}
-    className="absolute right-0 top-0 -z-10 h-[500px] w-[500px] rounded-full bg-arihant-violet-soft/40 blur-3xl"
+    className="absolute right-0 top-0 -z-10 h-125 w-125 rounded-full bg-arihant-violet-soft/40 blur-3xl"
   />
      
       <div className="mx-auto max-w-7xl px-6 relative z-10">
@@ -85,7 +85,7 @@ export default function Hero() {
               delay: 0.3,
               ease: [0.21, 0.47, 0.32, 0.98],
             }}
-            className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow"
+            className="mt-16 sm:mt-24 lg:mt-0 lg:shrink-0 lg:grow"
           >
             {/* The "Glow" behind the card - made it slightly more subtle */}
   <div className="absolute -inset-4 bg-arihant-violet/5 blur-3xl rounded-full" />
