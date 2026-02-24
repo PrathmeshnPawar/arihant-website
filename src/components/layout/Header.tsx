@@ -15,6 +15,7 @@ import { ChevronDown } from "lucide-react";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState<string | null>(null);
   // Hover intent timer (CRITICAL FIX)
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -134,46 +135,55 @@ export default function Header() {
 
       {/* Mobile menu */}
       {open && (
-          <div className="lg:hidden border-t border-gray-200 bg-white px-6 py-5">
-          <div className="space-y-4 text-base text-gray-700">
-            <Link
-              href="/products/equity"
-              className="block"
-              onClick={() => setOpen(false)}
-            >
-              Products
-            </Link>
-            <Link
-              href="/research/blog"
-              className="block"
-              onClick={() => setOpen(false)}
-            >
-              Research
-            </Link>
-            <Link
-              href="/tools/sip"
-              className="block"
-              onClick={() => setOpen(false)}
-            >
-              Tools
-            </Link>
-            <Link
-              href="/about-us"
-              className="block"
-              onClick={() => setOpen(false)}
-            >
-              About
-            </Link>
-            <Link
-              href="/contact"
-              className="block pt-3 font-semibold text-arihant-green"
-              onClick={() => setOpen(false)}
-            >
-              Open Account
-            </Link>
-          </div>
+  <div className="lg:hidden border-t border-gray-200 bg-white px-6 py-5">
+    <div className="space-y-2">
+
+      {siteConfig.map((group) => (
+        <div key={group.label}>
+
+          {/* Section Header */}
+          <button
+            onClick={() =>
+              setExpanded(expanded === group.label ? null : group.label)
+            }
+            className="
+              w-full flex items-center justify-between
+              py-3 text-left font-medium text-gray-800
+            "
+          >
+            {group.label}
+            <ChevronDown
+              size={18}
+              className={`transition-transform ${
+                expanded === group.label ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          {/* Children */}
+          {expanded === group.label && (
+            <div className="pl-3 pb-2 space-y-2">
+              {group.children?.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="
+                    block py-2 text-sm text-gray-600
+                    hover:text-arihant-violet
+                  "
+                  onClick={() => setOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+      ))}
+
+    </div>
+  </div>
+)}
     </header>
   );
 }
