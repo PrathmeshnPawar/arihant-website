@@ -8,16 +8,16 @@ export type Product = "Futures" | "Options";
 export type OptionType = "Calls" | "Puts";
 export type Side = "Buy" | "Sell";
 
-export interface SymbolOption {
-  label: string;
-}
+export type SymbolOption =
+  | "360ONE 24-FEB-2026"
+  | "NIFTY 27-MAR-2026";
 
 export interface FnOFormState {
   exchange: Exchange;
   product: Product;
-  symbol: SymbolOption | null;
+  symbol: SymbolOption | null;   // ✅ FIXED
   optionType: OptionType;
-  strike: string;
+  strike: number;
   qty: number;
   side: Side;
 }
@@ -35,9 +35,9 @@ export interface BasketItem extends FnOFormState {
 const initialFormState: FnOFormState = {
   exchange: "NFO",
   product: "Options",
-  symbol: null,
+  symbol: "360ONE 24-FEB-2026",   // ✅ Default selected (fixes your bug)
   optionType: "Calls",
-  strike: "",
+  strike: 0,
   qty: 500,
   side: "Buy",
 };
@@ -83,11 +83,11 @@ export function useFnOLogic() {
 
     const isDuplicate = basket.some(
       (item) =>
-        item.contract === form.symbol!.label && item.exchange === form.exchange,
+        item.contract === form.symbol && item.exchange === form.exchange,
     );
 
     if (isDuplicate) {
-      alert(`The symbol ${form.symbol.label} is already in your basket.`);
+      alert(`The symbol ${form.symbol} is already in your basket.`);
       return;
     }
 
@@ -102,7 +102,7 @@ export function useFnOLogic() {
     const newItem: BasketItem = {
       ...form,
       id: Date.now(),
-      contract: form.symbol.label,
+      contract: form.symbol,
       initialMargin,
       exposure,
       total: initialMargin + exposure,

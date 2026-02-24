@@ -68,12 +68,14 @@ export default function EquityFuturesTable() {
     <section className="mx-auto max-w-6xl px-6 py-10">
       {/* HEADER */}
       <div className="rounded-2xl border border-border/40 bg-white p-6 shadow-sm mb-6">
+       <div className="overflow-x-auto">
         <h1 className="text-2xl font-bold text-arihant-violet">
           Equity Futures
         </h1>
         <p className="text-sm text-gray-500">
           Basket Order Simulation & Hedge Benefit Analysis
         </p>
+        </div>
       </div>
 
       {/* TABLE */}

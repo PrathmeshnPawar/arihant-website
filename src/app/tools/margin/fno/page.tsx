@@ -4,7 +4,13 @@ import React from "react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 import { formatCurrency } from "@/utils/formatters";
-import { useFnOLogic, Exchange, Product, OptionType } from "./fnoLogic";
+import {
+  useFnOLogic,
+  Exchange,
+  Product,
+  OptionType,
+  SymbolOption,
+} from "./fnoLogic";
 
 const exchanges: Exchange[] = ["NFO", "BFO", "MCX", "CDS"];
 const products: Product[] = ["Futures", "Options"];
@@ -52,10 +58,10 @@ export default function FnOMarginCalculator() {
           <div className="mt-4">
             <Select
               label="Symbol"
-              value={form.symbol?.label ?? ""}
+              value={form.symbol ?? ""}
               options={["360ONE 24-FEB-2026", "NIFTY 27-MAR-2026"]}
               onChange={(v: string) =>
-                setForm({ ...form, symbol: { label: v } })
+                setForm({ ...form, symbol: v as SymbolOption })
               }
             />
           </div>
@@ -65,7 +71,7 @@ export default function FnOMarginCalculator() {
               <Input
                 label="Strike Price"
                 value={form.strike}
-                onChange={(v) => setForm({ ...form, strike: v })}
+                onChange={(v) => setForm({ ...form, strike: Number(v) })}
               />
 
               <Select
@@ -139,66 +145,103 @@ export default function FnOMarginCalculator() {
       </div>
 
       {/* TABLE */}
-      <div className="mt-6 rounded-2xl border border-border/40 bg-white shadow-sm overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-600">
-            <tr>
-              {[
-                "Exchange",
-                "Contract",
-                "Qty",
-                "Initial",
-                "Exposure",
-                "Total",
-                "",
-              ].map((h) => (
-                <th key={h} className="px-4 py-3 text-left font-semibold">
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
+      <div className="mt-6 rounded-2xl border border-border/40 bg-white shadow-sm">
+  <div className="overflow-x-auto">
+    <table className="w-full min-w-[760px] text-sm">
+      <thead className="bg-gray-50 text-gray-600">
+        <tr>
+          {[
+            "Exchange",
+            "Contract",
+            "Product",
+            "Strike Price",
+            "Qty",
+            "Initial",
+            "Exposure",
+            "",
+          ].map((h) => (
+            <th
+              key={h}
+              className="px-3 sm:px-4 py-3 text-left font-semibold whitespace-nowrap"
+            >
+              {h}
+            </th>
+          ))}
+        </tr>
+      </thead>
 
-          <tbody>
-            {basket.length === 0 ? (
-              <tr>
-                <td colSpan={7} className="text-center py-6 text-gray-400">
-                  No positions added
+      <tbody>
+        {basket.length === 0 ? (
+          <tr>
+            <td colSpan={8} className="text-center py-6 text-gray-400">
+              No positions added
+            </td>
+          </tr>
+        ) : (
+          <>
+            {basket.map((row) => (
+              <tr key={row.id} className="border-t">
+                <td className="px-4 py-3 whitespace-nowrap">
+                  {row.exchange}
+                </td>
+
+                <td className="whitespace-nowrap">
+                  {row.contract}
+                </td>
+
+                <td className="whitespace-nowrap">
+                  {row.product}
+                </td>
+
+                <td className="whitespace-nowrap">
+                   {row.strike === 0 ? "N/A" : row.strike}
+                </td>
+
+                <td className="whitespace-nowrap">
+                  {row.qty}
+                </td>
+
+                <td className="whitespace-nowrap">
+                  {formatCurrency(row.initialMargin)}
+                </td>
+
+                <td className="whitespace-nowrap">
+                  {formatCurrency(row.exposure)}
+                </td>
+
+                <td className="whitespace-nowrap">
+                  <button
+                    onClick={() => removeItem(row.id)}
+                    className="p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200"
+                  >
+                    <DeleteOutlineIcon fontSize="small" />
+                  </button>
                 </td>
               </tr>
-            ) : (
-              <>
-                {basket.map((row) => (
-                  <tr key={row.id} className="border-t">
-                    <td className="px-4 py-3">{row.exchange}</td>
-                    <td>{row.contract}</td>
-                    <td>{row.qty}</td>
-                    <td>{formatCurrency(row.initialMargin)}</td>
-                    <td>{formatCurrency(row.exposure)}</td>
-                    <td>{formatCurrency(row.total)}</td>
-                    <td>
-                      <button onClick={() => removeItem(row.id)}>
-                        <DeleteOutlineIcon fontSize="small" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+            ))}
 
-                {/* ✅ TOTALS ROW */}
-                <tr className="border-t bg-gray-50 font-semibold">
-                  <td className="px-4 py-3" colSpan={3}>
-                    Total
-                  </td>
-                  <td>{formatCurrency(summary.span)}</td>
-                  <td>{formatCurrency(summary.exposure)}</td>
-                  <td>{formatCurrency(summary.total)}</td>
-                  <td />
-                </tr>
-              </>
-            )}
-          </tbody>
-        </table>
-      </div>
+            {/* TOTALS ROW */}
+            <tr className="border-t bg-gray-50 font-semibold">
+              <td className="px-4 py-3 whitespace-nowrap" colSpan={5}>
+                Total
+              </td>
+
+              <td className="whitespace-nowrap">
+                {formatCurrency(summary.span)}
+              </td>
+
+              <td className="whitespace-nowrap">
+                {formatCurrency(summary.exposure)}
+              </td>
+
+              <td />
+            </tr>
+          </>
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>
       <div className="mt-10 rounded-2xl border border-border/40 bg-white p-6 shadow-sm">
         <h3 className="text-base font-semibold text-arihant-violet mb-3">
           How this calculator works
