@@ -65,7 +65,7 @@ export default function Header() {
               key={group.label}
             >
               <div
-                className="relative pb-3"
+                className="relative"
                 onMouseEnter={() => handleOpen(group.label)}
                 onMouseLeave={handleClose}
               >
@@ -76,7 +76,7 @@ export default function Header() {
           flex items-center gap-1
           font-medium text-gray-700
           hover:text-arihant-violet
-          transition-colors
+          transition-colors cursor-pointer
         "
                   >
                     {group.label}
@@ -91,7 +91,7 @@ export default function Header() {
                   onPointerDownOutside={(e) => e.preventDefault()}
                   onInteractOutside={(e) => e.preventDefault()}
                   onCloseAutoFocus={(e) => e.preventDefault()}
-                  className="w-56 rounded-xl bg-white shadow-xl border border-gray-100 p-2"
+                  className="w-56 rounded-xl bg-white shadow-xl border border-gray-100 p-2 "
                 >
                   {group.children?.map((item) => (
                     <DropdownMenuItem key={item.href} asChild>
@@ -100,7 +100,7 @@ export default function Header() {
                         className="
               block px-3 py-2 rounded-lg text-sm
               hover:bg-emerald-50
-              transition-colors
+              transition-colors cursor-pointer
             "
                       >
                         {item.label}
