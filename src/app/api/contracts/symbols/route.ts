@@ -1,4 +1,3 @@
-// api/contracts/route.ts
 import { getAllSymbols } from "@/lib/contracts";
 
 export async function GET(req: Request) {

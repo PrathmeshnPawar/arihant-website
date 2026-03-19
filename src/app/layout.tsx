@@ -3,6 +3,7 @@ import "./globals.css"; // Ensure global CSS is imported
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import { Inter } from 'next/font/google';
+import {WSProvider} from "@/lib/ws-context";
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -18,7 +19,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen flex flex-col">
         <Header />
         <main className="grow">
+          {/*<WSProvider>*/}
           {children}
+          {/*</WSProvider>*/}
         </main>
         <Footer />
       </body>

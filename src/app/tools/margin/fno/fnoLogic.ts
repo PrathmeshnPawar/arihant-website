@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 
 /* ================= TYPES ================= */
 
-export type Exchange = "NFO" | "BFO" | "MCX" | "CDS";
+export type Exchange = "NFO" | "BFO" | "NCD" | "BCD";
 export type Product = "Futures" | "Options";
 export type OptionType = "Calls" | "Puts";
 export type Side = "Buy" | "Sell";
@@ -11,11 +11,11 @@ export interface FnOFormState {
     exchange: Exchange;
     product: Product;
     symbol: string | null;
-    expiry: string | null;      // raw unix timestamp string e.g. "1459348200"
+    expiry: string | null;
     optionType: OptionType;
     strike: number;
     qty: number;
-    side: Side;
+    trade_type: Side;
     ltp: number;
 }
 
@@ -24,19 +24,19 @@ export interface BasketItem extends FnOFormState {
     contract: string;
     initialMargin: number;
     exposure: number;
+    netPremium: number;
     total: number;
+    isCalculating: boolean;
 }
 
-/* ================= EXCHANGE SEGMENTS ================= */
+/* ================= CONSTANTS ================= */
 
 const EXCHANGE_SEGMENT: Record<Exchange, number> = {
     NFO: 2,
     BFO: 5,
-    MCX: 2,
-    CDS: 3,
+    NCD: 3,
+    BCD: 6,
 };
-
-/* ================= INITIAL STATE ================= */
 
 const initialFormState: FnOFormState = {
     exchange: "NFO",
@@ -45,25 +45,9 @@ const initialFormState: FnOFormState = {
     expiry: null,
     optionType: "Calls",
     strike: 0,
-    qty: 500,
-    side: "Buy",
-    ltp: 580,
-};
-
-/* ================= STYLES ================= */
-
-export const labelStyle = {
-    fontSize: 10.5,
-    marginBottom: 4,
-    color: "#5F6368",
-    fontWeight: 700,
-    textTransform: "uppercase" as const,
-    letterSpacing: 0.4,
-};
-
-export const numberCell = {
-    textAlign: "right" as const,
-    fontVariantNumeric: "tabular-nums" as const,
+    qty: 0,
+    trade_type: "Buy",
+    ltp: 0,
 };
 
 /* ================= MARGIN API CALL ================= */
@@ -74,8 +58,7 @@ async function fetchMarginFromAPI(
     ltp: number,
     netqty: number,
     side: 1 | 2,
-): Promise<{ spanMargin: number; expMargin: number }> {
-
+): Promise<{ spanMargin: number; expMargin: number; netPremium: number }> {
     const response = await fetch("/api/margin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -97,141 +80,142 @@ async function fetchMarginFromAPI(
 
     return await response.json();
 }
+
 /* ================= MAIN HOOK ================= */
 
-export function useFnOLogic(
-    authToken: string = process.env.NEXT_PUBLIC_SESSION_TOKEN || "",
-    gscid: string = process.env.NEXT_PUBLIC_GSCID || "RUSHI45"
-) {
-
+export function useFnOLogic() {
     const [basket, setBasket] = useState<BasketItem[]>([]);
     const [form, setForm] = useState<FnOFormState>(initialFormState);
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    /* ================= SUMMARY ================= */
-
+    /* ── SUMMARY ── */
     const summary = useMemo(() => {
         return basket.reduce(
             (acc, curr) => ({
-                span: acc.span + curr.initialMargin,
-                exposure: acc.exposure + curr.exposure,
-                total: acc.total + curr.total,
+                span:       acc.span       + curr.initialMargin,
+                exposure:   acc.exposure   + curr.exposure,
+                netPremium: acc.netPremium + curr.netPremium,
+                total:      acc.total      + curr.total,
             }),
-            { span: 0, exposure: 0, total: 0 }
+            { span: 0, exposure: 0, netPremium: 0, total: 0 }
         );
     }, [basket]);
 
-    /* ================= ADD POSITION ================= */
-
+    /* ── ADD POSITION ── */
     const handleAdd = async () => {
         setError(null);
 
-        if (!form.symbol) {
-            alert("Please select a symbol");
-            return;
-        }
-
-        if (!form.expiry) {
-            alert("Please select a symbol with a valid expiry");
-            return;
-        }
-
+        if (!form.symbol)  { setError("Please select a symbol."); return; }
+        if (!form.expiry)  { setError("Please select an expiry."); return; }
+        if (!form.qty || form.qty === 0) { setError("Please enter a valid quantity."); return; }
         if (form.product === "Options" && (!form.strike || form.strike === 0)) {
-            setError("Please enter a Strike Price for Options.");
-            return;
+            setError("Please select a strike price."); return;
         }
 
-        const isDuplicate = basket.some(
-            (item) =>
-                item.contract === form.symbol &&
-                item.exchange === form.exchange
+        const isDuplicate = basket.some(item =>
+            item.symbol     === form.symbol &&
+            item.expiry     === form.expiry &&
+            item.strike     === form.strike &&
+            item.optionType === form.optionType &&
+            item.product    === form.product
         );
+        if (isDuplicate) { setError("This contract is already in your basket."); return; }
 
-        if (isDuplicate) {
-            alert(`The symbol ${form.symbol} is already in your basket.`);
-            return;
-        }
+        // Capture values directly — no snapshot needed
+        const symbol     = form.symbol;
+        const expiry     = form.expiry;
+        const exchange   = form.exchange;
+        const product    = form.product;
+        const strike     = form.strike;
+        const optionType = form.optionType;
+        const qty        = form.qty;
+        const side       = form.trade_type;
+        const ltp        = form.ltp;
 
-        /* ================= TOKEN LOOKUP ================= */
+        console.log("Adding position:", { symbol, expiry, exchange, product, strike, optionType, qty, side, ltp });
 
-        // In fnoLogic.ts handleAdd — wrap the token fetch too:
-        let token: number | null = null;
-        try {
-            const res = await fetch("/api/contracts/token", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    ...(authToken ? { Authorization: authToken } : {}),
-                },
-                body: JSON.stringify({
-                    symbol: form.symbol,
-                    expiry: form.expiry,
-                    strike: form.strike,
-                    optionType: form.optionType === "Calls" ? "CE" : "PE",
-                }),
-            });
-            const json = await res.json();
-            token = json.token;
-        } catch (err) {
-            setError("Failed to look up contract token.");
-            return;
-        }
+        const tempId = Date.now();
+        const optSuffix = product === "Options"
+            ? ` ${strike} ${optionType === "Calls" ? "CE" : "PE"}`
+            : " FUT";
 
-        if (!token) {
-            setError(`No etoken mapped for symbol: ${form.symbol}`);
-            return;
-        }
+        setBasket(prev => [...prev, {
+            ...form,
+            id:            tempId,
+            contract:      `${symbol} ${expiry}${optSuffix}`,
+            initialMargin: 0,
+            exposure:      0,
+            netPremium:    0,
+            total:         0,
+            isCalculating: true,
+        }]);
 
-        const exchange_segment = EXCHANGE_SEGMENT[form.exchange];
-        const side: 1 | 2 = form.side === "Buy" ? 1 : 2;
-
-        setLoading(true);
+        resetForm();
 
         try {
-
-            const { spanMargin, expMargin } = await fetchMarginFromAPI(
-                token,
-                exchange_segment,
-                form.ltp,
-                Number(form.qty),
-                side,
-
-            );
-
-            const newItem: BasketItem = {
-                ...form,
-                id: Date.now(),
-                contract: form.symbol,
-                initialMargin: Math.round(spanMargin),
-                exposure: Math.round(expMargin),
-                total: Math.round(spanMargin + expMargin),
+            const tokenPayload = {
+                symbol,
+                expiry,
+                exchange,
+                strike:     product === "Futures" ? 0 : Number(strike),
+                optionType: product === "Futures" ? "XX" : optionType === "Calls" ? "CE" : "PE",
             };
 
-            setBasket((prev) => [...prev, newItem]);
+            console.log("Token payload:", tokenPayload);  // ← verify strike here
+
+            const { token } = await fetch("/api/contracts/token", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(tokenPayload),
+            }).then(r => r.json());
+
+            console.log("Token received:", token);  // ← verify token here
+
+            if (!token) throw new Error(`No token found for ${symbol}`);
+
+            const exchange_segment = EXCHANGE_SEGMENT[exchange as Exchange];
+            const tradeSide: 1 | 2 = side === "Buy" ? 1 : 2;
+            const tradeLtp = product === "Futures" ? 0.01 : (ltp > 0 ? ltp : 1);
+
+            const { spanMargin, expMargin, netPremium } = await fetchMarginFromAPI(
+                token, exchange_segment, tradeLtp, Number(qty), tradeSide,
+            );
+
+            const spanClamped    = Math.max(0, Math.round(spanMargin));
+            const expClamped     = Math.max(0, Math.round(expMargin));
+            const premiumClamped = Math.max(0, Math.round(netPremium));
+
+            const total = product === "Options"
+                ? side === "Buy"
+                    ? spanClamped + expClamped + premiumClamped
+                    : Math.max(0, spanClamped + expClamped - premiumClamped)
+                : spanClamped + expClamped;
+
+            setBasket(prev => prev.map(item =>
+                item.id === tempId
+                    ? {
+                        ...item,
+                        initialMargin: spanClamped,
+                        exposure:      expClamped,
+                        netPremium:    premiumClamped,
+                        total,
+                        isCalculating: false,
+                    }
+                    : item
+            ));
 
         } catch (err: unknown) {
-
-            const message =
-                err instanceof Error ? err.message : "API call failed";
-
-            setError(message);
-
-        } finally {
-            setLoading(false);
+            setBasket(prev => prev.filter(i => i.id !== tempId));
+            setError(err instanceof Error ? err.message : "An unexpected error occurred");
         }
     };
 
-    /* ================= HELPERS ================= */
-
-    const resetForm = () => setForm(initialFormState);
-
-    const removeItem = (id: number) =>
-        setBasket((prev) => prev.filter((item) => item.id !== id));
-
+    /* ── HELPERS ── */
+    const resetForm   = () => setForm(initialFormState);
     const resetBasket = () => setBasket([]);
-
-    /* ================= RETURN ================= */
+    const removeItem  = (id: number) =>
+        setBasket(prev => prev.filter(i => i.id !== id));
 
     return {
         basket,
@@ -242,7 +226,7 @@ export function useFnOLogic(
         removeItem,
         resetBasket,
         resetForm,
-        loading,
         error,
+        loading,
     };
 }
